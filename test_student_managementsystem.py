@@ -1,5 +1,8 @@
 import unittest
 from student_management_system import StudentManagementSystem
+from unittest.mock import Mock
+from unittest.mock import patch
+from unittest.mock import mock_open
 
 class Test(unittest.TestCase):
 
@@ -9,8 +12,13 @@ class Test(unittest.TestCase):
         self.assertIsNotNone(sms)
 
     def test_read(self):
-        sms = StudentManagementSystem()
-        self.assertEqual(20, sms.read('score.csv'))
+        m_open = mock_open(read_data="1,강호민,85,90,95\n")
+        
+        with patch('student_management_system.open', m_open):
+            sms = StudentManagementSystem()
+            self.assertEqual(1, sms.read('score.csv'))
+
+        m_open.assert_called_with('score.csv', 'rt', encoding="utf-8")
 
 
 if __name__ == "__main__":
