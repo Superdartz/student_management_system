@@ -4,6 +4,7 @@ class StudentManagementSystem:
 
     def read(self, student_data_file):
         with open(student_data_file, 'rt', encoding='utf-8') as fo:
-            lines = fo.readlines()
+            data = fo.read()
+            lines = data.strip().split('\n')
 
         return len(lines)

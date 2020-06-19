@@ -20,6 +20,16 @@ class Test(unittest.TestCase):
 
         m_open.assert_called_with('score.csv', 'rt', encoding="utf-8")
 
+    def test_read_2(self):
+        m_open = mock_open(read_data="1,강호민,85,90,95\n2,김광호,80,70,60\n3,김민식,75,85,80\n")
+        
+        with patch('student_management_system.open', m_open):
+            sms = StudentManagementSystem()
+            self.assertEqual(3, sms.read('score.csv'))
+
+        m_open.assert_called_with('score.csv', 'rt', encoding="utf-8")
+
+
 
 if __name__ == "__main__":
     unittest.main()
