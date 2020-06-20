@@ -20,15 +20,17 @@ class StudentManagementSystem:
 
     def _make_students_string(self, students):
         result = ""
+        
         for key, item in students:
-            result = result + str(key) + ","
-            result = result + item.sid + ","
-            result = result + item.sname + ","
-            result = result + str(int(item.skor)) + ","
-            result = result + str(int(item.seng)) + ","
-            result = result + str(int(item.smat)) + ","
-            result = result + str(int(item.stotal)) + ","
-            result = result + str(int(item.savg)) + "\n"
+            result = result + "{등수:"
+            result = result + str(key) + "등},{ID:"
+            result = result + item.sid + "},{이름:"
+            result = result + item.sname + "},{국어점수:"
+            result = result + str(int(item.skor)) + "},{영어점수:"
+            result = result + str(int(item.seng)) + "},{수학점수:"
+            result = result + str(int(item.smat)) + "},{총점:"
+            result = result + str(int(item.stotal)) + "},{평균:"
+            result = result + str(int(item.savg)) + "}\n"
         return result.strip()
 
     def sort(self, order_key="register", order_way="asc"):
@@ -61,3 +63,8 @@ class StudentManagementSystem:
 
         result = self._make_students_string(sorted_students)
         return result
+
+    def write(self, file_name, order_key="register", order_way="asc"):
+        with open(file_name, 'wt', encoding="utf-8") as fo:
+            result = self.sort(order_key, order_way)
+            fo.write(result)
