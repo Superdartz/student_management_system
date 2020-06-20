@@ -18,35 +18,46 @@ class StudentManagementSystem:
 
         return len(self._students)
 
+    def _make_students_string(self, students):
+        result = ""
+        for key, item in students:
+            result = result + str(key) + ","
+            result = result + item.sid + ","
+            result = result + item.sname + ","
+            result = result + str(int(item.skor)) + ","
+            result = result + str(int(item.seng)) + ","
+            result = result + str(int(item.smat)) + ","
+            result = result + str(int(item.stotal)) + ","
+            result = result + str(int(item.savg)) + "\n"
+        return result.strip()
+
+    def sort(self, order_key="register", order_way="asc"):
+        if order_key == "register" and order_way == "asc":
+            sorted_students = sorted(self._students.items())
+        elif order_key == "register" and order_way == "des":
+            sorted_students = sorted(self._students.items(), reverse=True)
+        elif order_key == "stotal" and order_way == "asc":
+            sorted_students = sorted(self._students.items(), key=key_stotal)
+        elif order_key == "stotal" and order_way == "des":
+            sorted_students = sorted(self._students.items(), key=key_stotal, reverse=True)
+
+        result = self._make_students_string(sorted_students)
+        return result
+
     def sort_by_reg(self, order="asc"):
         if order == "asc":
             sorted_students = sorted(self._students.items())
         elif order == "des":
             sorted_students = sorted(self._students.items(), reverse=True)
 
-        result = ""
-        for key, item in sorted_students:
-            result = result + str(key) + ","
-            result = result + item.sid + ","
-            result = result + item.sname + ","
-            result = result + str(int(item.skor)) + ","
-            result = result + str(int(item.seng)) + ","
-            result = result + str(int(item.smat)) + ","
-            result = result + str(int(item.stotal)) + ","
-            result = result + str(int(item.savg)) + "\n"
-        return result.strip()
+        result = self._make_students_string(sorted_students)
+        return result
 
     def sort_by_stotal(self, order="asc"):
-        sorted_students = sorted(self._students.items(), key=key_stotal)
+        if order == "asc":
+            sorted_students = sorted(self._students.items(), key=key_stotal)
+        elif order == "des":
+            sorted_students = sorted(self._students.items(), key=key_stotal, reverse=True)
 
-        result = ""
-        for key, item in sorted_students:
-            result = result + str(key) + ","
-            result = result + item.sid + ","
-            result = result + item.sname + ","
-            result = result + str(int(item.skor)) + ","
-            result = result + str(int(item.seng)) + ","
-            result = result + str(int(item.smat)) + ","
-            result = result + str(int(item.stotal)) + ","
-            result = result + str(int(item.savg)) + "\n"
-        return result.strip()
+        result = self._make_students_string(sorted_students)
+        return result
